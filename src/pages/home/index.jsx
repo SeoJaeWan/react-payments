@@ -2,9 +2,7 @@ import SubmitCard from "../../components/templates/submitCard";
 import Funnel from "../../components/atoms/funnel";
 import CardForm from "../../components/templates/cardForm";
 import CardList from "../../components/templates/cardList";
-import { useState } from "react";
 import useCustomForm from "../../hooks/useForm";
-import FormProvider from "../../hooks/useFormProvider";
 import cardsMachine from "../../machine/cards";
 
 const Home = () => {

@@ -11,6 +11,8 @@ const Funnel = (props) => {
   const { machine, children } = props;
   const [state] = useMachine(machine);
 
+  console.log(state.value);
+
   return Children.map(children, (child) => {
     if (child.props.name === state.value) {
       return cloneElement(child, {

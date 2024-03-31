@@ -12,6 +12,10 @@ const cardsMachine = createMachine(
           },
           UPDATE_CARD: {
             target: "form",
+            actions: ["updateInfo"],
+          },
+          REMOVE_CARD: {
+            actions: ["removeCards"],
           },
         },
       },
@@ -42,14 +46,13 @@ const cardsMachine = createMachine(
   {
     actions: {
       updateInfo: assign({
-        cardInfo: (_, event) => ({ ...event.select }),
+        cardInfo: (_, event) => ({ ...event.data }),
       }),
       insertInfo: assign({
         cardInfo: ({ cardInfo }, event) => ({ ...cardInfo, ...event }),
       }),
       removeCards: assign({
-        cards: ({ cards }, event) =>
-          cards.filter(({ index }) => index !== event.index),
+        cards: ({ cards }, event) => cards.filter(({ id }) => id !== event.id),
       }),
       insertCards: assign({
         cards: ({ cards, cardInfo }) => [cardInfo, ...cards],
