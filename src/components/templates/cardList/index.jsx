@@ -3,9 +3,11 @@ import Box from "../../atoms/box";
 import Text from "../../atoms/text";
 import Card from "../../molecules/card";
 import { Fragment } from "react";
+import { useMachine } from "@xstate/react";
+import cardsMachine from "../../../machine/cards";
 
-const CardList = (props) => {
-  const { cardList, next } = props;
+const CardList = () => {
+  const [state, send] = useMachine(cardsMachine);
 
   return (
     <Box className={["app", "flex-column-center"]}>
@@ -13,7 +15,7 @@ const CardList = (props) => {
         <Text className={["page-title", "mb-10"]}>보유 카드</Text>
       </Box>
 
-      {cardList.map(
+      {state.context.cards.map(
         (
           { name, year, month, cardNumberSplit, cardCompany, nickname },
           idx
