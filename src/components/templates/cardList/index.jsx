@@ -2,26 +2,13 @@ import PropTypes from "prop-types";
 import Box from "../../atoms/box";
 import Text from "../../atoms/text";
 import Card from "../../molecules/card";
-import { useFormContext } from "../../../hooks/useFormProvider";
+import { Fragment } from "react";
+import { useMachine } from "@xstate/react";
+import cardsMachine from "../../../machine/cards";
 
-const CardList = (props) => {
-  const { cardData, setCardData, next } = props;
-  const { reset } = useFormContext();
-  const cardList = Object.values(cardData);
+const CardList = () => {
+  const [state, send] = useMachine(cardsMachine);
 
-  const handleUpdateCard = (data) => {
-    reset(data);
-    next();
-  };
-
-  const handleDeleteCard = (id) => {
-    setCardData((prev) => {
-      delete prev[id];
-
-      return { ...prev };
-    });
-  };
-  //
   return (
     <Box className={["app", "flex-column-center"]}>
       <Box className={"flex-center"}>

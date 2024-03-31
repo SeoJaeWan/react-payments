@@ -83,10 +83,17 @@ const useCustomForm = (props = {}) => {
     }
   };
 
+<<<<<<< HEAD
   const reset = (defValue = defaultValues) => {
     valueRefs.current = defValue;
     formOption.current = {};
     setWatchValue(defValue);
+=======
+  const reset = () => {
+    valueRefs.current = defaultValues;
+    formOption.current = {};
+    setWatchValue(defaultValues);
+>>>>>>> main
   };
 
   const handleSubmit = (callback) => () => {

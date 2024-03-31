@@ -5,9 +5,9 @@ import CardList from "../../components/templates/cardList";
 import { useState } from "react";
 import useCustomForm from "../../hooks/useForm";
 import FormProvider from "../../hooks/useFormProvider";
+import cardsMachine from "../../machine/cards";
 
 const Home = () => {
-  const [cardData, setCardData] = useState({});
   const form = useCustomForm({
     mode: "onChange",
     defaultValues: {
@@ -23,19 +23,17 @@ const Home = () => {
   });
 
   return (
-    <FormProvider {...form}>
-      <Funnel steps={["list", "form", "success"]}>
-        <Funnel.Step name="list">
-          <CardList cardData={cardData} setCardData={setCardData} />
-        </Funnel.Step>
-        <Funnel.Step name="form">
-          <CardForm />
-        </Funnel.Step>
-        <Funnel.Step name="success">
-          <SubmitCard setCardData={setCardData} />
-        </Funnel.Step>
-      </Funnel>
-    </FormProvider>
+    <Funnel machine={cardsMachine}>
+      <Funnel.Step name="list">
+        <CardList />
+      </Funnel.Step>
+      <Funnel.Step name="form">
+        <CardForm />
+      </Funnel.Step>
+      <Funnel.Step name="submit">
+        <SubmitCard />
+      </Funnel.Step>
+    </Funnel>
   );
 };
 
