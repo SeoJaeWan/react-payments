@@ -21,7 +21,7 @@ const CardList = (props) => {
       return { ...prev };
     });
   };
-
+  //
   return (
     <Box className={["app", "flex-column-center"]}>
       <Box className={"flex-center"}>
