@@ -14,20 +14,11 @@ const CardForm = (props) => {
   const { state, send } = props;
   const form = useForm({
     mode: "onChange",
-    defaultValues: {
-      name: "",
-      year: "",
-      month: "",
-      cardNumber1: "",
-      cardNumber2: "",
-      cardNumber3: "",
-      cardNumber4: "",
-      cardCompany: "",
-    },
+    defaultValues: state.context.cardInfo,
   });
 
   const {
-    reset,
+    handleSubmit,
     formState: { isValid },
   } = form;
 
@@ -39,14 +30,17 @@ const CardForm = (props) => {
     }
   };
 
-  const handleBack = () => {
-    back();
-    reset();
+  const handleBackForm = () => {
+    send({ type: "BACK_TO_LIST" });
+  };
+
+  const handleSubmitForm = (data) => {
+    send({ type: "INSERT_CARD_INFO", event: { data } });
   };
 
   return (
     <FormProvider {...form}>
-      <button className="page-title" onClick={handleBack}>
+      <button className="page-title" onClick={handleBackForm}>
         &lt; 카드 추가
       </button>
 
@@ -172,7 +166,7 @@ const CardForm = (props) => {
         </Box>
       </InputForm>
       <Modal>
-        <CardModal submit={next} />
+        <CardModal submit={handleSubmit(handleSubmitForm)} />
       </Modal>
     </FormProvider>
   );

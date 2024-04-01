@@ -1,5 +1,16 @@
 import { assign, createMachine } from "xstate";
 
+const defaultValues = {
+  name: "",
+  year: "",
+  month: "",
+  cardNumber1: "",
+  cardNumber2: "",
+  cardNumber3: "",
+  cardNumber4: "",
+  cardCompany: "",
+};
+
 const cardsMachine = createMachine(
   {
     id: "cards",
@@ -23,6 +34,7 @@ const cardsMachine = createMachine(
         on: {
           INSERT_CARD_INFO: {
             target: "submit",
+            actions: ["insertInfo"],
           },
           BACK_TO_LIST: {
             target: "list",
@@ -34,6 +46,7 @@ const cardsMachine = createMachine(
         on: {
           DONE: {
             target: "done",
+            actions: ["insertCards"],
           },
         },
       },
@@ -43,26 +56,42 @@ const cardsMachine = createMachine(
       },
     },
     context: {
-      cards: [],
-      cardInfo: {},
+      cards: {},
+      cardInfo: defaultValues,
     },
   },
   {
     actions: {
       updateInfo: assign({
-        cardInfo: (_, event) => ({ ...event.data }),
+        cardInfo: ({ event }) => ({ ...event.data }),
       }),
       insertInfo: assign({
-        cardInfo: ({ cardInfo }, event) => ({ ...cardInfo, ...event }),
+        cardInfo: ({ context: { cardInfo }, event }) => ({
+          ...cardInfo,
+          ...event.data,
+        }),
       }),
       resetCardInfo: assign({
         cardInfo: {},
       }),
       removeCards: assign({
-        cards: ({ cards }, event) => cards.filter(({ id }) => id !== event.id),
+        cards: ({ context: { cards }, event }) => {
+          const updateCards = { ...cards };
+          delete updateCards[event.id];
+
+          return updateCards;
+        },
       }),
       insertCards: assign({
-        cards: ({ cards, cardInfo }) => [cardInfo, ...cards],
+        cards: ({ context: { cards }, event }) => {
+          console.log(event.data);
+          console.log(event);
+
+          return {
+            [event.data.id]: event.data,
+            ...cards,
+          };
+        },
       }),
     },
   }

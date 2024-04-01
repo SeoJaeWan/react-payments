@@ -11,7 +11,7 @@ const CardList = (props) => {
         <Text className={["page-title", "mb-10"]}>보유 카드</Text>
       </Box>
 
-      {state.context.cards.map((data, idx) => (
+      {Object.values(state.context.cards).map((data, idx) => (
         <Box className="card-item" key={idx}>
           <button onClick={() => send({ type: "UPDATE_CARD", data })}>
             <Card {...data} />
