@@ -1,11 +1,9 @@
 import Box from "../../atoms/box";
 import Text from "../../atoms/text";
 import Card from "../../molecules/card";
-import { useMachine } from "@xstate/react";
-import cardsMachine from "../../../machine/cards";
 
-const CardList = () => {
-  const [state, send] = useMachine(cardsMachine);
+const CardList = (props) => {
+  const { state, send } = props;
 
   return (
     <Box className={["app", "flex-column-center"]}>

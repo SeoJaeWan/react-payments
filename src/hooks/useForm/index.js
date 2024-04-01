@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 
-const useCustomForm = (props = {}) => {
+const useForm = (props = {}) => {
   const { defaultValues = {}, mode } = props;
 
   const elementRefs = useRef({});
@@ -104,4 +104,4 @@ const useCustomForm = (props = {}) => {
   };
 };
 
-export default useCustomForm;
+export default useForm;

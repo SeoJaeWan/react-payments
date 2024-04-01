@@ -24,6 +24,10 @@ const cardsMachine = createMachine(
           INSERT_CARD_INFO: {
             target: "submit",
           },
+          BACK_TO_LIST: {
+            target: "list",
+            actions: ["resetCardInfo"],
+          },
         },
       },
       submit: {
@@ -50,6 +54,9 @@ const cardsMachine = createMachine(
       }),
       insertInfo: assign({
         cardInfo: ({ cardInfo }, event) => ({ ...cardInfo, ...event }),
+      }),
+      resetCardInfo: assign({
+        cardInfo: {},
       }),
       removeCards: assign({
         cards: ({ cards }, event) => cards.filter(({ id }) => id !== event.id),

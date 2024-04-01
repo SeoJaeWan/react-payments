@@ -7,14 +7,29 @@ import InputForm from "../../molecules/inputForm";
 import InputLength from "../../molecules/inputLength";
 import useModal from "../../../hooks/useModal";
 import CardModal from "../../molecules/cardModal";
-import { useFormContext } from "../../../hooks/useFormProvider";
+import useForm from "../../../hooks/useForm";
+import FormProvider from "../../../hooks/useFormProvider";
 
 const CardForm = (props) => {
-  const { next, back } = props;
+  const { state, send } = props;
+  const form = useForm({
+    mode: "onChange",
+    defaultValues: {
+      name: "",
+      year: "",
+      month: "",
+      cardNumber1: "",
+      cardNumber2: "",
+      cardNumber3: "",
+      cardNumber4: "",
+      cardCompany: "",
+    },
+  });
+
   const {
     reset,
     formState: { isValid },
-  } = useFormContext();
+  } = form;
 
   const { Modal, modal } = useModal();
 
@@ -30,7 +45,7 @@ const CardForm = (props) => {
   };
 
   return (
-    <>
+    <FormProvider {...form}>
       <button className="page-title" onClick={handleBack}>
         &lt; 카드 추가
       </button>
@@ -159,7 +174,7 @@ const CardForm = (props) => {
       <Modal>
         <CardModal submit={next} />
       </Modal>
-    </>
+    </FormProvider>
   );
 };
 
